@@ -4,24 +4,21 @@
  * and open the template in the editor.
  */
 package List;
+import strutturedatinotevoli.DataStruct;
 
-/**
- *
- * @author -Undert{0}w-
- */
-public interface List {
+public interface List<Type> extends DataStruct<Type>{
     //metodi di inserimento
-    boolean insert(Object e, int pos);
-    boolean add(Object e);
+    Boolean insert(Type e, int pos);
+    Boolean add(Type e);
     
     //metodi di ricerca
-    int[] findKey(Object e);
-    Object findPos(int pos);
+    int[] findKey(Type e);
+    Type findPos(int pos);
     
     //metodi di eliminazione
-    boolean delete(int pos);
+    Boolean delete(int pos);
     
     //metodi di output della lista
-    Object[] show();
+    Type[] show();
     int count();
 }

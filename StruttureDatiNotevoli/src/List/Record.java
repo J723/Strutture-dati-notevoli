@@ -9,16 +9,15 @@ package List;
  *
  * @author -Undert{0}w-
  */
-public class Record {
-    public Object data; //dati sensibili
+public class Record<Type> extends Element<Type>{
     public Record next; //indice al record successivo
     
-    public Record(Object data){
-        this.data = data;
+    public Record(Type data){
+        value = data;
     }
     
-    public Record(Object data, Record next){
-        this.data = data;
+    public Record(Type data, Record next){
+        value = data;
         this.next = next;
     }
 }

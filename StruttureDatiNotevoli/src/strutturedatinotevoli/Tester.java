@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package strutturedatinotevoli;
-//Liste
-//
-import List.List;
-import List.Linked_List;
-import List.Array_List;
+
+import List.*;
+import Graphs.*;
 import java.util.Scanner;
 /**
  *
@@ -19,61 +13,90 @@ public class Tester {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        List l = null;
+        
+        DataStruct<String> ds = null;
         String title = null;
         while (true){
             System.out.println("Scegli la struttura dati da testare ma evita di prendere a testate lo schermo perchè questo programma non funziona così!\n1-Array list\n2-Linked list\n0-Esci");
-            switch(new Scanner(System.in).nextLine()){
-                case "0":
+            
+            int response = Integer.parseInt(new Scanner(System.in).nextLine());
+            if (response >= 0 && response < 5){
+                switch(response){
+                case 0:
                     return;
                     
-                case "1": 
-                    l = new Array_List();
+                case 1: 
+                    ds = new ArrayList();
                     title = "array list";
                     break;
                 
-                case "2":
-                    l = new Linked_List();
+                case 2:
+                    ds = new LinkedList();
                     title = "linked list";
                     break;
+                    
+                case 3:
+                    ds = new MatrixGraph();
+                    title = "matrix graph";
+                    break;
+                    
+                case 4:
+                    ds = new ListGraph();
+                    title = "list graph";
+                    break;    
+                }
+                
+                if (title == null) break;
+
+                if (response < 3){
+                    List l = (List) ds;
+                    test_List(l, title);
+                }
+                else if (response < 5){
+                    Graph g = (Graph) ds;
+                    //test_graph(g, title);
+                }
+            
+                nonsenseAndEntropyAreFlushingTheOutput_GodDamnIt();//ripulisce la console
             }
-            if (title == null)
-                break;
-            test_List(l, title);
-            System.out.flush();//ripulisce la console
         }
+        
     }
     
     public static void test_List(List l, String listName){  
         while(true){
-        System.out.println("Test Funzioni " + listName + " | lunghezza lista attuale: " + l.count() + " |\npremere:\n1-Inserisci\n2-Aggiungi\n3-Cancella\n4-Cerca elemento\n5-Ottieni posizione\n6-Mostra\n7-Chiudi");
-            switch(new Scanner(System.in).nextLine()){
-                case "1":
-                    insert(l);
-                    break;
-                case "2":
-                    add(l);
-                    break;
-                case "3":
-                    delete(l);
-                    break;   
-                case "4":
-                    findPos(l);
-                    break;
-                case "5":
-                    findKey(l);
-                    break;
-                case "6":
-                    show(l);
-                    break;
-                case "7":
-                    return;
+            System.out.println("\n\nTest Funzioni " + listName + " | lunghezza lista attuale: " + l.count() + " |\npremere:\n1-Inserisci\n2-Aggiungi\n3-Cancella\n4-Cerca elemento\n5-Ottieni posizione\n6-Mostra\n7-Chiudi");
+
+            int response = Integer.parseInt(new Scanner(System.in).nextLine());
+            if (response > 0 && response < 8){
+                switch(response){
+                        case 1:
+                            insert(l);
+                            break;
+                        case 2:
+                            add(l);
+                            break;
+                        case 3:
+                            delete(l);
+                            break;   
+                        case 4:
+                            findPos(l);
+                            break;
+                        case 5:
+                            findKey(l);
+                            break;
+                        case 6:
+                            show(l);
+                            break;
+                        case 7:
+                            return;
+                    }
+                nonsenseAndEntropyAreFlushingTheOutput_GodDamnIt();//ripulisce la console
             }
-            System.out.flush();//ripulisce la console
         }
     }    
     
-    //testMethods Functions
+    //testMethods Functions - LISTE
     //
     public static void insert(List l){
         //Query all'utente dei dati necessari
@@ -130,11 +153,11 @@ public class Tester {
         int[] s = l.findKey(new Scanner(System.in).nextLine());
 
         //stampa in base all'esito
-        if(s.length >= 1){            
+        if(s != null && s.length >= 1){            
             System.out.println("Fatto!");
             //stampa tutto
             for(int i = 0; i < s.length; i++)
-                System.out.print("-" + s[i]);
+                System.out.print("\n-" + s[i]);
         }
         else            
             System.out.println("C'è stato un errore, nessun elemento trovato");
@@ -142,13 +165,27 @@ public class Tester {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }    
     public static void show(List l){
-        System.out.println();
+        System.out.println("Contenuto lista:");
         //stampa gli elementi con la relativa posizione
-        for(int i = 0; i < l.count(); i++){
-            System.out.println((String)l.findPos(i));
+        Object[] result = l.show();
+        for(int i = 0; i < result.length; i++){
+            System.out.println(result[i]);
         }
     }    
     public static void MoreDatas(){
         //possibili futuri implementabili calcoli di spazio e tempistiche
+    }
+    
+    private static void nonsenseAndEntropyAreFlushingTheOutput_GodDamnIt(){
+        /*
+        for(int i = 0; i < 10000; i++)
+            System.out.print("\b");
+        */
+        /*
+        System.out.print("\033[H\033[2J");  
+        System.out.flush(); 
+        */
+        
+        //AH AH! CREDEVI FOSSE DAVVERO POSSIBILE?!
     }
 }

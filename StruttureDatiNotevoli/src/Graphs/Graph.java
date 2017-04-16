@@ -19,4 +19,6 @@ public interface Graph<T> extends DataStruct<T>{
 
     //Gestione Grafo
     Boolean[][] showAdjMat();
+    int countSummits();
+    int countArch(T summit);
 }

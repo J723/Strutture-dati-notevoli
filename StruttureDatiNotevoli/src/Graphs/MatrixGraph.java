@@ -47,7 +47,7 @@ public class MatrixGraph<T> implements Graph<T>{
     public Boolean removeSummit(T summit) {
         try{
             //controlla l'esistenza del vertice
-            if (summits.contains(summit)) return false;
+            if (!summits.contains(summit)) return false;
             
             // memorizza l'indice e rimuove dalla lista degli oggetti
             int s = summits.indexOf(summit);
@@ -57,8 +57,7 @@ public class MatrixGraph<T> implements Graph<T>{
             adjMatrix.remove(s);
 
             //rimuove la colonna a tutti
-            for (ArrayList<Boolean> l : adjMatrix)
-                l.remove(s);
+            for (ArrayList<Boolean> l : adjMatrix) l.remove(s);
 
             return true;
         
@@ -141,15 +140,34 @@ public class MatrixGraph<T> implements Graph<T>{
     public Boolean[][] showAdjMat() {
         try{
             //converte la matrice in array bidimensionale e la ritorna
-            Boolean[][] matrix = new Boolean[adjMatrix.size()][adjMatrix.size()];
-            
+            Boolean[][] matrix = new Boolean[adjMatrix.size()][adjMatrix.size()];            
             for (int i = 0; i < matrix.length; i++)
-                matrix[i] = (Boolean[]) adjMatrix.get(i).toArray();
+                for (int j = 0; j < matrix[i].length; j++) 
+                    matrix[i][j] = adjMatrix.get(i).get(j);
             
             return matrix;
             
         }catch (Exception e){
             return null;
         }
+    }
+
+    @Override
+    public int countSummits() {
+        return summits.size();
+    }
+
+    @Override
+    public int countArch(T summit) {
+        //ottiene l'indice del vertice
+        int i = summits.indexOf(summit);
+
+        //controlla l'0esistenza del vertice
+        if (i == -1) return i;        
+        
+        //conta ogni true nella riga di adiacenza
+        int l = 0;
+        for (boolean b : adjMatrix.get(i)) if (b) l++;        
+        return l;
     }
 }
